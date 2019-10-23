@@ -15,10 +15,12 @@ def exit_method():
 def about_method():
     tkinter.messagebox.showinfo(title="Welcome", message="This is some info about the project!")
 
+
 def LoadFile(ev):
     fn = filedialog.Open(root).show()
     if fn == '':
         return
+    return fn
     # textbox.delete('1.0', 'end')
     # textbox.insert('1.0', open(fn, 'rt').read())
 
@@ -28,11 +30,18 @@ def SaveFile(ev):
     #     return
     # if not fn.endswith(".txt"):
     #     fn += ".txt"
-    open(fn, 'wt').write(textbox.get('1.0', 'end'))
+    #open(fn, 'wt').write(textbox.get('1.0', 'end'))
 
 def Quit(ev):
     global root
     root.destroy()
+
+def print_image():
+    canvas = Canvas(root, width=300, height=300)
+    canvas.pack()
+    img = ImageTk.PhotoImage(Image.open("ball.png"))
+    canvas.create_image(20, 20, anchor=NW, image=img)
+
 
 root = tk.Tk()
 root.geometry("500x500")
@@ -74,18 +83,22 @@ button_2.place(x=200, y=420)
 
 
 panelFrame = Frame(root, height=60, bg='gray')
-textFrame = Frame(root, height=340, width=600)
+imageFrame = Frame(root, height=340, width=600)
 
 panelFrame.pack(side='top', fill='x')
-textFrame.pack(side='bottom', fill='both', expand=1)
+imageFrame.pack(side='bottom', fill='both', expand=1)
 
-textbox = Text(textFrame, font='Arial 14', wrap='word')
-scrollbar = Scrollbar(textFrame)
+load = Image.open("../research/mainlogo.png")
+load = Image.open("../research/mainlogo.png")
+render = ImageTk.PhotoImage(load)
 
-scrollbar['command'] = textbox.yview
-textbox['yscrollcommand'] = scrollbar.set
+imagebox = Label(root, image=render)
+scrollbar = Scrollbar(imageFrame)
 
-textbox.pack(side='left', fill='both', expand=1)
+#scrollbar['command'] = imagebox.yview
+#imagebox['yscrollcommand'] = scrollbar.set
+
+imagebox.pack(side='left', fill='both', expand=1)
 scrollbar.pack(side='right', fill='y')
 
 loadBtn = Button(panelFrame, text='Load')
